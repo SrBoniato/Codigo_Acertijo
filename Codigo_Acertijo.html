@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acertijos - ¡Feliz Cumpleaños!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Pirata One', cursive;
+            margin: 0;
+            padding: 0;
+            background: url('https://assets.onecompiler.app/432jebg8f/432je2n7p/Fondo.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+            z-index: 1000;
+        }
+        .popup h2 {
+            margin: 0 0 10px 0;
+        }
+        .popup button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup button:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        .container.active {
+            display: block;
+        }
+        h1 {
+            font-size: 28px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        p {
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #mensaje3 {
+            font-size: 18px;
+        }
+        #mensaje3.green {
+            color: #98FB98; /* Verde claro */
+        }
+        #mensaje3.red {
+            color: #FF6347; /* Rojo claro */
+        }
+
+        .input-box {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+        .letters-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 5px;
+        }
+        .letter-box {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+        }
+        .space-box {
+            width: 20px;
+            height: 30px;
+            background-color: transparent;
+            border: none;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+        }
+
+        .puzzle-container {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 5px;
+            justify-content: center;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            width: fit-content;
+        }
+        .pieces-container {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 5px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .piece, .empty-slot {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .piece {
+            background-size: 400px 400px;
+            background-color: #fff;
+        }
+        .selected {
+            border: 2px solid #4caf50;
+        }
+
+
+        .input-text {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        #mensaje {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Popup -->
+    <div id="popup" class="popup">
+        <h2 id="popupMessage"></h2>
+        <button onclick="cerrarPopup()">Cerrar</button>
+    </div>
+    
+    <!-- Pantalla de Inicio -->
+    <div class="container active" id="inicio">
+        <h1>¡Feliz Cumpleaños Ade!</h1>
+        <p>Si quieres saber tu regalo tendrás que pasar una serie de retos.</p>
+        <button onclick="mostrarReto1()">Comenzar</button>
+    </div>
+
+    <!-- Acertijo 1 -->
+    <div class="container" id="reto1">
+        <h1>Acertijo 1</h1>
+        <p>Este reto consiste en buscar cuántas veces aparecen en la siguiente imagen tus mejores compis.</p>
+        <img src="https://assets.onecompiler.app/432jebg8f/432je2n7p/1.jpeg" alt="Imagen del acertijo">
+        <div class="input-box">
+            <label for="andres">Andrés:</label>
+            <input type="number" id="andres" placeholder="Cantidad de veces">
+            <label for="elvis">Elvis:</label>
+            <input type="number" id="elvis" placeholder="Cantidad de veces">
+            <label for="josemi">Josemi:</label>
+            <input type="number" id="josemi" placeholder="Cantidad de veces">
+            <label for="alberto">Alberto:</label>
+            <input type="number" id="alberto" placeholder="Cantidad de veces">
+        </div>
+        <button onclick="verificarReto1()">Comprobar</button>
+        <p id="mensaje1"></p>
+    </div>
+
+    <!-- Acertijo 2 -->
+    <div class="container" id="reto2">
+        <h1>Acertijo 2</h1>
+        <p>Resuelve el misterio escondido en este reto. Coloca las letras en los cuadros correspondientes.</p>
+        <div class="letters-container" id="lettersContainer2">
+            <!-- Primera fila: "zarpad ya" -->
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <div class="space-box"></div>
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <!-- Segunda fila: "sin miedo" -->
+            <div class="space-box"></div>
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <div class="space-box"></div>
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+        </div>
+        <button onclick="verificarReto2()">Comprobar</button>
+        <p id="mensaje2"></p>
+    </div>
+
+    <!-- Acertijo 3: Puzzle -->
+    <div class="container" id="reto3">
+        <h1>Acertijo 3: Resuelve el Puzzle</h1>
+        <p>Selecciona una pieza y cámbiala de posición dentro de la cuadrícula.</p>
+        <div class="puzzle-container" id="puzzleGrid"></div>
+        <div class="pieces-container" id="piecesContainer"></div>
+        <button onclick="verificarPuzzle()">Comprobar</button>
+        <button onclick="reiniciarPuzzle()">Reiniciar</button>
+        <button id="botonSiguiente" onclick="mostrarReto4()" disabled>Siguiente</button>
+        <p id="mensaje3"></p>
+        <img id="imagenFinal" src="ruta-de-la-imagen-final.jpg" alt="Imagen Final" style="display:none; margin-top: 20px; max-width: 100%; height: auto;">
+    </div>
+
+
+
+    <!-- Acertijo 4 -->
+    <div class="container" id="reto4">
+        <h1>Acertijo 4: Encuentra el Tesoro</h1>
+        <p>Introduce la palabra mágica para continuar.</p>
+        <div class="letters-container" id="lettersContainer4">
+            <!-- "tesoro" -->
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+            <input type="text" class="letter-box" maxlength="1">
+        </div>
+        <button onclick="verificarReto4()">Comprobar</button>
+        <p id="mensaje4"></p>
+    </div>
+
+    <!-- Acertijo 5 -->
+    <div class="container" id="reto5">
+        <h1>Acertijo 5: Reconoce la Imagen</h1>
+        <p>Introduce el nombre correcto para continuar.</p>
+        <img src="ruta-de-la-imagen-acertijo5.jpg" alt="Imagen del acertijo 5">
+        <input type="text" id="respuesta5" class="input-text" placeholder="Escribe aquí tu respuesta">
+        <button onclick="verificarReto5()">Comprobar</button>
+        <p id="mensaje5"></p>
+    </div>
+
+    <script>
+        // Funciones de navegación y lógica
+        function mostrarReto1() {
+            document.getElementById('inicio').classList.remove('active');
+            document.getElementById('reto1').classList.add('active');
+        }
+
+        function mostrarPopup(mensaje, esCorrecto) {
+            const popup = document.getElementById('popup');
+            const popupMessage = document.getElementById('popupMessage');
+            popupMessage.textContent = mensaje;
+            popupMessage.style.color = esCorrecto ? '#98FB98' : '#FF6347'; // Verde claro o rojo claro
+            popup.style.display = 'block';
+        }
+        
+        function cerrarPopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none';
+        }
+
+        function verificarReto1() {
+            const respuestasCorrectas = { andres: 2, elvis: 3, josemi: 1, alberto: 4 };
+            const respuestasUsuario = {
+                andres: parseInt(document.getElementById('andres').value) || 0,
+                elvis: parseInt(document.getElementById('elvis').value) || 0,
+                josemi: parseInt(document.getElementById('josemi').value) || 0,
+                alberto: parseInt(document.getElementById('alberto').value) || 0,
+            };
+        
+            if (JSON.stringify(respuestasUsuario) === JSON.stringify(respuestasCorrectas)) {
+                mostrarPopup('¡Correcto! Pasas al siguiente acertijo.', true);
+                setTimeout(() => {
+                    cerrarPopup();
+                    mostrarReto2();
+                }, 2000);
+            } else {
+                mostrarPopup('Algunas respuestas son incorrectas. Inténtalo de nuevo.', false);
+            }
+        }
+
+        function mostrarReto2() {
+            document.getElementById('reto1').classList.remove('active');
+            document.getElementById('reto2').classList.add('active');
+        }
+
+        function verificarReto2() {
+            const respuestaCorrecta = 'zarpad ya sin miedo'.replace(/\s/g, '').split('');
+            const letrasUsuario = Array.from(document.querySelectorAll('#lettersContainer2 .letter-box')).map(
+                (input) => input.value.trim().toLowerCase()
+            );
+        
+            if (JSON.stringify(letrasUsuario) === JSON.stringify(respuestaCorrecta)) {
+                mostrarPopup('¡Correcto! Pasas al siguiente acertijo.', true);
+                setTimeout(() => {
+                    cerrarPopup();
+                    mostrarReto3();
+                }, 2000);
+            } else {
+                mostrarPopup('La frase es incorrecta. Inténtalo de nuevo.', false);
+            }
+        }
+
+
+        let piezaSeleccionada = null;
+        
+        function mostrarReto3() {
+            document.getElementById('reto2').classList.remove('active');
+            document.getElementById('reto3').classList.add('active');
+            cargarPuzzle();
+        }
+        
+        function cargarPuzzle() {
+            const puzzleGrid = document.getElementById('puzzleGrid');
+            const piecesContainer = document.getElementById('piecesContainer');
+            const numPiezas = 16;
+            const piezaOrden = Array.from({ length: numPiezas }, (_, i) => i + 1);
+            const desordenado = piezaOrden.sort(() => Math.random() - 0.5);
+        
+            // Limpia contenedores por si se recarga
+            puzzleGrid.innerHTML = '';
+            piecesContainer.innerHTML = '';
+        
+            // Crear la cuadrícula del puzzle
+            for (let i = 0; i < numPiezas; i++) {
+                const emptySlot = document.createElement('div');
+                emptySlot.classList.add('empty-slot');
+                emptySlot.dataset.index = i + 1;
+                emptySlot.addEventListener('click', () => manejarIntercambio(emptySlot));
+                puzzleGrid.appendChild(emptySlot);
+            }
+        
+            // Crear las piezas en el contenedor
+            desordenado.forEach((num) => {
+                const piece = document.createElement('div');
+                piece.className = 'piece';
+                piece.dataset.index = num;
+                piece.style.backgroundImage = 'url("https://assets.onecompiler.app/432jebg8f/432je2n7p/2.jpg")';
+                piece.style.backgroundPosition = `${(num - 1) % 4 * -100}px ${Math.floor((num - 1) / 4) * -100}px`;
+        
+                piece.addEventListener('click', () => manejarSeleccion(piece));
+                piecesContainer.appendChild(piece);
+            });
+        }
+        
+        function manejarSeleccion(piece) {
+            // Si hay una pieza seleccionada, deseleccionarla
+            if (piezaSeleccionada) {
+                piezaSeleccionada.classList.remove('selected');
+            }
+        
+            // Seleccionar la nueva pieza o deseleccionar si es la misma
+            if (piezaSeleccionada === piece) {
+                piezaSeleccionada = null;
+            } else {
+                piezaSeleccionada = piece;
+                piece.classList.add('selected');
+            }
+        }
+        
+        function manejarIntercambio(slot) {
+            if (piezaSeleccionada) {
+                if (slot.hasChildNodes()) {
+                    // Intercambiar piezas
+                    const piezaExistente = slot.firstChild;
+                    const parentPiezaSeleccionada = piezaSeleccionada.parentNode;
+        
+                    // Intercambiar los elementos
+                    slot.appendChild(piezaSeleccionada);
+                    parentPiezaSeleccionada.appendChild(piezaExistente);
+                } else {
+                    // Mover pieza a un slot vacío
+                    slot.appendChild(piezaSeleccionada);
+                }
+                piezaSeleccionada.classList.remove('selected');
+                piezaSeleccionada = null;
+            }
+        }
+        
+        function verificarPuzzle() {
+            const slots = Array.from(document.querySelectorAll('.empty-slot'));
+            const ordenActual = slots.map((slot) => {
+                if (slot.firstChild) {
+                    return parseInt(slot.firstChild.dataset.index);
+                }
+                return null;
+            });
+        
+            if (JSON.stringify(ordenActual) === JSON.stringify(Array.from({ length: 16 }, (_, i) => i + 1))) {
+                mostrarPopup('¡Correcto! Has resuelto el puzzle.', true);
+                document.getElementById('imagenFinal').style.display = 'block'; // Mostrar imagen final
+                document.getElementById('botonSiguiente').disabled = false; // Activar botón "Siguiente"
+            } else {
+                mostrarPopup('El puzzle no está resuelto. Inténtalo de nuevo.', false);
+            }
+        }
+        
+        function reiniciarPuzzle() {
+            piezaSeleccionada = null;
+            document.getElementById('imagenFinal').style.display = 'none';
+            document.getElementById('botonSiguiente').disabled = true;
+            cargarPuzzle();
+        }
+        
+
+
+
+        function mostrarReto4() {
+            document.getElementById('reto3').classList.remove('active');
+            document.getElementById('reto4').classList.add('active');
+        }
+
+        function verificarReto4() {
+            const respuestaCorrecta = 'tesoro'.split('');
+            const letrasUsuario = Array.from(document.querySelectorAll('#lettersContainer4 .letter-box')).map(
+                (input) => input.value.trim().toLowerCase()
+            );
+        
+            if (JSON.stringify(letrasUsuario) === JSON.stringify(respuestaCorrecta)) {
+                mostrarPopup('¡Correcto! Pasas al siguiente acertijo.', true);
+                setTimeout(() => {
+                    cerrarPopup();
+                    mostrarReto5();
+                }, 2000);
+            } else {
+                mostrarPopup('La palabra es incorrecta. Inténtalo de nuevo.', false);
+            }
+        }
+
+
+        function mostrarReto5() {
+            document.getElementById('reto4').classList.remove('active');
+            document.getElementById('reto5').classList.add('active');
+        }
+
+        function verificarReto5() {
+            const respuestaCorrecta = 'elvis';
+            const respuestaUsuario = document.getElementById('respuesta5').value.trim().toLowerCase();
+        
+            if (respuestaUsuario === respuestaCorrecta) {
+                mostrarPopup('¡Correcto! Has completado todos los acertijos.', true);
+                setTimeout(() => {
+                    cerrarPopup();
+                    alert('¡Felicidades, has completado todos los acertijos!');
+                }, 2000);
+            } else {
+                mostrarPopup('La respuesta es incorrecta. Inténtalo de nuevo.', false);
+            }
+        }
+
+    </script>
+</body>
+</html>
